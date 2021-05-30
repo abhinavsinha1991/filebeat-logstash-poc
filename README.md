@@ -1,12 +1,15 @@
-## Deploy logstash and filebeat first:
+## This project uses filebeat processors to truncate fields greater than a specified limit, then rewrites the top level "message" field with the truncated field value by concatenating(using script processor) before transmitting it over to logstash.
+
+
+### Deploy logstash and filebeat first:
 
 `kubectl apply -f deploy/`
 
-## Login to the filebeat pod
+### Login to the filebeat pod
 
 `kubectl exec -it <filebeat-pod-name> bash`
 
-## Add the following lines to a file in /usr/share/filebeat directory by name *.log, e.g abc.log:
+### Add the following lines to a file in /usr/share/filebeat directory by name *.log, e.g abc.log:
 
 ```
 "321 - App01 - WebServer is starting"
@@ -17,7 +20,7 @@
 "789 - App02 - Database is refreshing tables"
 ```
 
-## Check logstash logs:
+### Check logstash logs:
 
 `kubectl logs -f logstash`
 
