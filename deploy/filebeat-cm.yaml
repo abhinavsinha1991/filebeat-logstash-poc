@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: filebeat-config
+  labels:
+    app: filebeat
+data:
+  filebeat.yml: |-
+     filebeat.inputs:
+     - type: log
+       paths:
+       - /usr/share/filebeat/*.log
+     
+     processors:
+     - dissect:
+         tokenizer: '"%{service.pid} - %{service.name} - %{service.status}"'
+         field: "message"
+         target_prefix: ""
+     
+     - truncate_fields:
+        fields:
+         - "service.status"
+        max_characters: 5
+        fail_on_error: false
+        ignore_missing: true
+     
+     - convert:
+        fields:
+         - {from: "service.pid", to: "service.pid", type: "integer"}
+        ignore_missing: true
+        fail_on_error: false
+     
+     - drop_fields:
+        when:
+         not.equals:
+           service.pid: abc
+        fields: ["message"]
+        ignore_missing: false
+     
+     - script:
+        lang: javascript
+        source: >
+          function process(event) {
+            event.Put("message", event.Get("service.pid") + " " + event.Get("service.name") + " " + event.Get("service.status"));
+          }
+     
+     output.logstash:
+       hosts: '${LOGSTASH_URL}'
