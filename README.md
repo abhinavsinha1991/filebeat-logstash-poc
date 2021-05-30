@@ -6,7 +6,7 @@
 
 `kubectl exec -it <filebeat-pod-name> bash`
 
-## Add the following lines to a file in PWD by name *.log, e.g abc.log:
+## Add the following lines to a file in /usr/share/filebeat directory by name *.log, e.g abc.log:
 
 ```
 "321 - App01 - WebServer is starting"
