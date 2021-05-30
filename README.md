@@ -44,7 +44,7 @@
            "ecs" => {
         "version" => "1.5.0"
     },
-       <mark>"message" => "789 App02 Datab",</mark>
+       <b>"message" => "789 App02 Datab",</b>
          "input" => {
         "type" => "log"
     },
