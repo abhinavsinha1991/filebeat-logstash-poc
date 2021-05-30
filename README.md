@@ -26,7 +26,7 @@
 
 ### The message field will have truncated service status as below:
 
-```
+<code>
 {
       "@version" => "1",
        "service" => {
@@ -44,7 +44,7 @@
            "ecs" => {
         "version" => "1.5.0"
     },
-       "message" => "789 App02 Datab",
+       <mark>"message" => "789 App02 Datab",</mark>
          "input" => {
         "type" => "log"
     },
@@ -66,4 +66,4 @@
         }
     }
 }
-```
+</code>
